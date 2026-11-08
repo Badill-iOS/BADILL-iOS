@@ -9,7 +9,7 @@
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--card:#161618;--tx:#f5f5f7;--mu:#a1a1a6;--ln:#333336;--ac:#2997ff;--sh:none}}
 :root[data-theme="dark"]{--bg:#000;--card:#161618;--tx:#f5f5f7;--mu:#a1a1a6;--ln:#333336;--ac:#2997ff;--sh:none}
-*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}.ti{max-width:720px;margin:0 auto 60px;padding:44px 22px;text-align:center;color:#fff;background:linear-gradient(135deg,#0071e3,#6e5cf0);border-radius:28px;box-shadow:0 10px 40px rgba(0,113,227,.35)}.ti .tag{display:inline-block;background:rgba(255,255,255,.2);padding:5px 14px;border-radius:980px;font-size:14px;font-weight:600;margin-bottom:14px}.ti h2{font-size:clamp(28px,6vw,40px);line-height:1.1;letter-spacing:-1.2px;margin:0 0 10px}.ti p{opacity:.9;margin:0 0 22px}.btn{display:inline-block;margin:4px;padding:11px 22px;border-radius:980px;background:var(--ac);color:#fff;text-decoration:none}.btn.alt{background:var(--bg);color:var(--tx);border:1px solid var(--ln)}.ti .btn{background:#fff;color:#0071e3;font-weight:600;border:0}.ti .btn.alt{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.55)}
 body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--ln)}
@@ -37,9 +37,10 @@ input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid 
 </style>
 </head>
 <body>
-<nav><div class="logo" role="img" aria-label="BADILL-iOS"></div><button class="cartbtn" onclick="openP('cart')">Carrito · <span id="cnt">0</span></button></nav>
+<nav><div class="logo" role="img" aria-label="BADILL-iOS"></div><div style="display:flex;gap:14px;align-items:center"><a href="#tradein" style="color:var(--tx);text-decoration:none;font-size:15px">Trade-In</a><button class="cartbtn" onclick="openP('cart')">Carrito · <span id="cnt">0</span></button></div></nav>
 <section class="hero"><h1>Tecnología, simple<br>y al mejor precio.</h1></section>
 <main class="grid" id="grid"></main>
+<section class="ti" id="tradein"><div class="tag">📱 Trade-In</div><h2>Recibimos tu iPhone<br>como método de pago</h2><p>Conoce cómo funciona el programa Trade-In de BADILL-iOS.</p><a class="btn" href="tradein.pdf" target="_blank" rel="noopener">Ver PDF</a><a class="btn alt" id="tiwa" href="#" target="_blank" rel="noopener">Consultar por WhatsApp</a></section>
 <footer>© BADILL-iOS · WhatsApp +506 5014 9399 · <a href="#" onclick="adminLogin();return false" style="color:var(--mu)">Admin</a></footer>
 
 <div class="ov" id="ov-cart" onclick="if(event.target===this)closeP()"><div class="pn">
@@ -144,6 +145,7 @@ function prev(){$("pv").innerHTML="";[...$("af").files].slice(0,6).forEach(f=>{c
 function nx(id,el){const p=prods.find(x=>x.id==id),a=imgsOf(p);if(a.length<2)return;const i=((+el.dataset.i||0)+1)%a.length;el.dataset.i=i;el.querySelector("img").src=a[i];el.querySelectorAll(".dots b").forEach((d,k)=>d.style.opacity=k==i?1:.35)}
 function del(id,b){if(b.dataset.s!=="1"){b.dataset.s="1";b.textContent="¿Seguro?";setTimeout(()=>{b.dataset.s="";b.textContent="Quitar"},3000);return}prods=prods.filter(p=>p.id!==id);delete cart[id];sv("bd_prods",prods);sv("bd_cart",cart);render()}
 function exportCat(){const t=JSON.stringify(prods);(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{$("aerr").textContent="Catálogo copiado."}).catch(()=>{const c=$("cat");c.style.display="block";c.value=t;c.select()})}
+$("tiwa").href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hola BADILL-iOS, quiero información sobre el Trade-In.");
 render();
 </script>
 </body>
